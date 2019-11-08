@@ -17,17 +17,17 @@ matrix = RGBMatrix(options = options)
 
 def getype():
 	inputpath = raw_input("Please enter a type:")
-	TYPE = 'type/' + inputpath + '.png'
+	TYPE = '../img/type/' + inputpath + '.png'
 	return TYPE
 
 def getdest():
 	inputpath = raw_input("Please enter a destination:")
-	DEST = 'dest/' + inputpath + '.png'
+	DEST = '../img/dest/' + inputpath + '.png'
 	return DEST
 
 def getdest2():
 	inputpath = raw_input("Please enter a destination2(If not needed, enter 'n'):")
-	DEST = 'dest2/' + inputpath + '.png'
+	DEST = '../img/dest2/' + inputpath + '.png'
 	return DEST
 
 pathType = getype()
@@ -43,7 +43,7 @@ while os.path.isfile(pathDest) == False:
 pass
 
 pathDest2 = getdest2()
-while os.path.isfile(pathDest2) == False and not pathDest2 == "dest2/n.png":
+while os.path.isfile(pathDest2) == False and not pathDest2 == "../img/dest2/n.png":
 	print("No such file exits")
 	getdest2
 pass
@@ -52,7 +52,7 @@ imageType = Image.open(pathType)
 imageDest = Image.open(pathDest)
 imageType.paste(imageDest,(48,0))
 
-if (not pathDest2 == "dest2/n.png" ):
+if (not pathDest2 == "../img/dest2/n.png" ):
 	imageType2 = Image.open(pathType)
 	imageDest2 = Image.open(pathDest2)
 	imageType2.paste(imageDest2,(48,0))
