@@ -73,16 +73,16 @@ void POSTjson()
 {
   char buffer[255];
   HTTPClient client;
+  setAllLed(30,0,0xFF,0xFF);
   doc["mode"] = 1;
   doc["type"] = "local";
   doc["dest"] = "utsunomiya-o";
   doc["dest2"] = "ssl-ju";
 
   serializeJson(doc,buffer,sizeof(buffer));
-  setAllLed(30,0,0xFF,0xFF);
 
   client.begin(host);
-  client.addHeader("Content-Type","application/json");
+  client.addHeader("Content-Type","text/plain");
   int status_code = client.POST((uint8_t*)buffer, strlen(buffer));
   
   
@@ -100,6 +100,7 @@ void POSTjson()
 
 void setup()
 {
+  dacWrite(25,0); //ノイズ対策
   Serial.begin(921600);
   M5.begin();
   Wire.begin();
