@@ -82,7 +82,7 @@ void POSTjson()
   serializeJson(doc,buffer,sizeof(buffer));
 
   client.begin(host);
-  client.addHeader("Content-Type","text/plain");
+  client.addHeader("Content-Type","application/json");
   int status_code = client.POST((uint8_t*)buffer, strlen(buffer));
   
   
