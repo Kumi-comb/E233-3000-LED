@@ -19,6 +19,41 @@ matrix = RGBMatrix(options = options)
 FLAG = False
 BLIGHTNESS = 1
 
+def set_image1(blightness,Type):
+
+  MatrixImage = Image.open("../img/type/"+Type+".png" )
+  MatrixImage.point(lambda x: x * blightness)
+  matrix.SetImage(MatrixImage.convert('RGB'))
+  return
+
+def set_image2(blightness,Type,Dest):
+  ImageType = Image.open("../img/type/"+Type+".png")
+  ImageDest = Image.open("../img/dest/"+Dest+".png")
+  MatrixImage = ImageType
+  MatrixImage.paste(ImageDest,(48,0))
+  MatrixImage.point(lambda x: x * blightness)
+  matrix.SetImage(MatrixImage.convert('RGB'))
+  return
+
+def set_image3(blightness,Type,Dest,Dest2):
+  ImageType = Image.open("../img/type/"+Type+".png")
+  ImageDest = Image.open("../img/dest/"+Dest+".png")
+  ImageDest2 = Image.open("../img/dest2/"+Dest2+".png")
+  MatrixImage = ImageType
+  MatrixImage2 = ImageType
+  MatrixImage.paste(ImageDest,(48,0))
+  #MatrixImage2.paste(ImageDest2,(48,0))
+  MatrixImage.point(lambda x: x * blightness)
+  MatrixImage2.point(lambda x: x * blightness)
+
+  while FLAG == True:
+    matrix.SetImage(MatrixImage.convert('RGB'))
+    print("hoge")
+    time.sleep(3)
+    matrix.SetImage(MatrixImage2.convert('RGB'))
+    time.sleep(3)
+  pass
+  return
 
 app = Flask(__name__)
 
@@ -29,57 +64,21 @@ def post_json():
   print(json["type"])
   print(json["dest"])
   print(json["dest2"])
-  FLAG = 0
+  FLAG = False
   if(json["mode"]==0):
     im = Image.new('RGB',(32,128),(0,0,0))
     blank = ImageDraw.Draw(im)
-    matrix.SetImage(blank)
+    matrix.SetImage(blank.convert('RGB'))
   elif (json["mode"]== 1):
     set_image1(BLIGHTNESS,json["type"])
   elif(json["mode"]==2):
     set_image2(BLIGHTNESS,json["type"],json["dest"])
   elif(json["mode"]==3):
-    FLAG == 1
+    FLAG == True
     blinker = threading.Thread(target=set_image3,args=(BLIGHTNESS,json["type"],json["dest"],json["dest2"]))
-    blinker.start() 
-  return
+    blinker.start()
+    #set_image3(BLIGHTNESS,json["type"],json["dest"],json["dest2"])
+  return json
   
 if __name__ == "__main__":
   app.run(debug=False,host='0.0.0.0',port=61101)
-
-
-def set_image1(blightness,Type):
-
-  MatrixImage = Image.open("../img/type/"+Type+".png" )
-  MatrixImage.point(lambda x: x * blightness)
-  MatrixImage.convert('RGB')
-  matrix.SetImage(MatrixImage)
-  return
-
-def set_image2(blightness,Type,Dest):
-  ImageType = Image.open("../img/type/"+Type+".png")
-  ImageDest = Image.open("../img/dest/"+Dest+".png")
-  MatrixImage = ImageType.paste(ImageDest,(48,0))
-  MatrixImage.point(lambda x: x * blightness)
-  MatrixImage.convert('RGB')
-  matrix.SetImage(MatrixImage)
-  return
-
-def set_image3(blightness,Type,Dest,Dest2):
-  ImageType = Image.open("../img/type/"+Type+".png")
-  ImageDest = Image.open("../img/dest/"+Dest+".png")
-  ImageDest2 = Image.open("../img/dest2"+Dest2+".png")
-  MatrixImage = ImageType.paste(ImageDest,(48,0))
-  MatrixImage2 = ImageType.paste(ImageDest2,(48,0))
-  MatrixImage.point(lambda x: x * blightness)
-  MatrixImage2.point(lambda x: x * blightness)
-  MatrixImage.convert('RGB')
-  MatrixImage2.convert('RGB')
-
-  while FLAG:
-    matrix.SetImage(MatrixImage)
-    time.sleep(3)
-    matrix.SetImage(MatrixImage2)
-    time.sleep(3)
-  pass
-  return

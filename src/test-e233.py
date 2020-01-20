@@ -16,17 +16,17 @@ matrix = RGBMatrix(options = options)
 
 
 def getype():
-	inputpath = raw_input("Please enter a type:")
+	inputpath = input("Please enter a type:")
 	TYPE = '../img/type/' + inputpath + '.png'
 	return TYPE
 
 def getdest():
-	inputpath = raw_input("Please enter a destination:")
+	inputpath = input("Please enter a destination:")
 	DEST = '../img/dest/' + inputpath + '.png'
 	return DEST
 
 def getdest2():
-	inputpath = raw_input("Please enter a destination2(If not needed, enter 'n'):")
+	inputpath = input("Please enter a destination2(If not needed, enter 'n'):")
 	DEST = '../img/dest2/' + inputpath + '.png'
 	return DEST
 
