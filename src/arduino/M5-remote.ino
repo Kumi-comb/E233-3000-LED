@@ -20,16 +20,16 @@ void GetValue(void)
   int temp_encoder_increment;
   Wire.requestFrom(0x5E, 3);
   if(Wire.available()){
-     temp_encoder_increment = Wire.read();
-     cur_button = !Wire.read();
+    temp_encoder_increment = Wire.read();
+    cur_button = !Wire.read();
   }
   if(temp_encoder_increment > 127){//anti-clockwise
-      direction = 1;
-      encoder_increment = 256 - temp_encoder_increment;
+    direction = 1;
+    encoder_increment = 256 - temp_encoder_increment;
   }
   else{
-      direction = 0;
-      encoder_increment = temp_encoder_increment;
+    direction = 0;
+    encoder_increment = temp_encoder_increment;
   }
   M5.update();
 }
@@ -84,7 +84,6 @@ void POSTjson()
   client.begin(host);
   client.addHeader("Content-Type","application/json");
   int status_code = client.POST((uint8_t*)buffer, strlen(buffer));
-  
   
   if (status_code == HTTP_CODE_OK){
     setAllLed(30,0,0xFF,0);
